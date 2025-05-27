@@ -1,0 +1,112 @@
+/* frontend/src/pages/admin/ProductNewPage.css */
+
+.product-new-container {
+  max-width: 800px; /* Largura máxima para o formulário */
+  margin: 40px auto; /* Centraliza o container e adiciona espaçamento superior/inferior */
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-new-container h1 {
+  text-align: center; /* Centraliza o título */
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+}
+
+.product-new-form .form-group {
+  margin-bottom: 20px; /* Espaçamento entre os grupos de formulário */
+}
+
+.product-new-form label {
+  display: block; /* Garante que o label ocupe sua própria linha */
+  margin-bottom: 8px; /* Espaçamento entre o label e o input/textarea */
+  font-weight: bold;
+  color: #555;
+}
+
+.product-new-form input[type="text"],
+.product-new-form input[type="number"],
+.product-new-form textarea,
+.product-new-form select {
+  width: 100%; /* Ocupa a largura total do container */
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+.product-new-form textarea {
+  resize: vertical; /* Permite redimensionar verticalmente */
+  min-height: 100px;
+}
+
+.product-new-form .image-input-row {
+  display: flex; /* Alinha o input e o botão de remover na mesma linha */
+  gap: 10px; /* Espaçamento entre os elementos */
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.product-new-form .image-input-row input {
+  flex-grow: 1; /* Input de imagem ocupa o espaço restante */
+}
+
+.product-new-form .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.product-new-form .btn-primary {
+  background-color: #007bff; /* Azul para o botão primário */
+  color: white;
+  width: 100%; /* Faz o botão de submissão ocupar a largura total */
+  margin-top: 30px; /* Espaçamento acima do botão de submissão */
+}
+
+.product-new-form .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.product-new-form .btn-danger {
+  background-color: #dc3545; /* Vermelho para o botão de remover */
+  color: white;
+  padding: 8px 15px; /* Ajuste para botões menores */
+}
+
+.product-new-form .btn-danger:hover {
+  background-color: #c82333;
+}
+
+.product-new-form .checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: 25px; /* Espaçamento superior */
+}
+
+.product-new-form .checkbox-group input[type="checkbox"] {
+  margin-right: 10px; /* Espaçamento entre o checkbox e o label */
+  transform: scale(1.2); /* Aumenta um pouco o tamanho do checkbox */
+}
+
+/* Estilos para o botão "Adicionar outra imagem" */
+.product-new-form button[type="button"] {
+    background-color: #6c757d; /* Cinza para botão secundário */
+    color: white;
+    padding: 10px 15px;
+    margin-top: 10px; /* Espaçamento do botão Add Image */
+    display: block; /* Garante que o botão ocupe sua própria linha */
+    width: auto; /* Ajusta a largura para o conteúdo */
+}
+
+.product-new-form button[type="button"]:hover {
+    background-color: #5a6268;
+}

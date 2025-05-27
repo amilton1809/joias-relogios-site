@@ -1,0 +1,179 @@
+/* frontend/src/pages/admin/Products.css */
+
+/* Container principal da página de administração de produtos */
+.admin-products {
+  max-width: 1200px; /* Largura máxima para a tabela ficar bem espaçada */
+  margin: 40px auto; /* Centraliza o container na página */
+  padding: 30px;
+  background-color: var(--light-bg); /* Cor de fundo clara */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho da página (Título e botão "Adicionar Produto") */
+.admin-products .admin-header {
+  display: flex;
+  justify-content: space-between; /* Espaça o título e o botão */
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color); /* Borda inferior para separação */
+}
+
+.admin-products .admin-header h1 {
+  color: var(--text-color); /* Cor do texto padrão */
+  font-size: 2.5em;
+  margin: 0; /* Remove margem padrão do h1 */
+}
+
+/* Estilo para os botões gerais */
+.admin-products .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex; /* Para alinhar o ícone com o texto */
+  align-items: center;
+  gap: 8px; /* Espaçamento entre ícone e texto */
+}
+
+/* Botão primário (Adicionar Produto) */
+.admin-products .btn-primary {
+  background-color: var(--primary-color); /* Cor primária roxa */
+  color: var(--light-text); /* Texto branco */
+}
+
+.admin-products .btn-primary:hover {
+  background-color: var(--secondary-color); /* Cor secundária no hover */
+}
+
+/* Alertas */
+.admin-products .alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.admin-products .alert-danger {
+  background-color: rgba(var(--danger-color), 0.1); /* Fundo avermelhado claro */
+  color: var(--danger-color); /* Texto vermelho */
+  border: 1px solid var(--danger-color);
+}
+
+/* Mensagens de carregamento */
+.admin-products p {
+  text-align: center;
+  color: var(--text-color);
+  font-size: 1.1em;
+  padding: 20px 0;
+}
+
+/* Responsividade da tabela */
+.admin-products .table-responsive {
+  overflow-x: auto; /* Permite scroll horizontal em telas pequenas */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+/* Estilo da tabela */
+.admin-products .table {
+  width: 100%;
+  border-collapse: collapse; /* Remove espaçamento entre células */
+  margin-top: 20px;
+}
+
+.admin-products .table th,
+.admin-products .table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.admin-products .table th {
+  background-color: var(--dark-bg); /* Fundo escuro para o cabeçalho */
+  color: var(--light-text); /* Texto claro no cabeçalho */
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.admin-products .table tbody tr:hover {
+  background-color: #f1f1f1; /* Leve alteração no hover da linha */
+}
+
+/* Thumbnail da imagem do produto na tabela */
+.admin-products .product-thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+/* Botões de ação na tabela (Editar, Excluir) */
+.admin-products .action-buttons {
+  display: flex;
+  gap: 8px; /* Espaçamento entre os botões de ação */
+}
+
+.admin-products .btn-sm {
+  padding: 8px 12px; /* Botões menores */
+  font-size: 0.85em;
+}
+
+.admin-products .btn-info {
+  background-color: var(--info-color); /* Cor info para o botão de editar */
+  color: white;
+}
+
+.admin-products .btn-info:hover {
+  background-color: #138496;
+}
+
+.admin-products .btn-danger {
+  background-color: var(--danger-color); /* Cor danger para o botão de excluir */
+  color: white;
+}
+
+.admin-products .btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+  .admin-products {
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .admin-products .admin-header {
+    flex-direction: column; /* Coloca título e botão em colunas */
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .admin-products .admin-header h1 {
+    font-size: 2em;
+  }
+
+  .admin-products .admin-header .btn {
+    width: 100%; /* Botão "Adicionar Produto" ocupa toda a largura */
+    justify-content: center; /* Centraliza o conteúdo do botão */
+  }
+
+  .admin-products .table th,
+  .admin-products .table td {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .admin-products .product-thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+}
