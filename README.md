@@ -48,19 +48,12 @@ O projeto está dividido em duas partes principais:
    npm install
    ```
 
-3. Crie um arquivo `.env` baseado no `.env.example`:
-   ```
-   MONGO_URI=mongodb://localhost:27017/joias_relogios
-   PORT=5000
-   JWT_SECRET=joiasrelogios2025secretkey
-   NODE_ENV=development
-   ```
+3. 
 
 4. Inicie o servidor:
    ```
    npm start
    ```
-   O servidor backend estará rodando em http://localhost:5000
 
 ### Passo 2: Configurar o Frontend
 
@@ -78,7 +71,7 @@ O projeto está dividido em duas partes principais:
    ```
    npm start
    ```
-   O site estará disponível em http://localhost:3000
+   
 
 ## Funcionalidades
 
@@ -111,13 +104,6 @@ O projeto está dividido em duas partes principais:
 
 ## Credenciais de Acesso
 
-### Administrador
-- Email: admin@exemplo.com
-- Senha: admin123
-
-### Usuário Comum
-- Email: usuario@exemplo.com
-- Senha: usuario123
 
 ## Instruções para Windows
 
