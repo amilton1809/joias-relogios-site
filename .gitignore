@@ -6,6 +6,7 @@ frontend/node_modules/
 # Ignorar arquivos de ambiente
 .env
 backend/.env
+backend/.env.example
 frontend/.env
 
 # Ignorar builds do frontend
