@@ -4,6 +4,8 @@ import { FaArrowLeft, FaCreditCard, FaMoneyBill, FaBarcode } from 'react-icons/f
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
 const CheckoutPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +37,7 @@ const CheckoutPage = () => {
     
     setCartItems(items);
     setLoading(false);
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate]); // Adiciona currentUser e navigate como dependências
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +55,13 @@ const CheckoutPage = () => {
     e.preventDefault();
     setError('');
     setProcessing(true);
+
+    // Verificação de autenticação e token antes da requisição POST
+    if (!currentUser || !currentUser.token) {
+      setError('Você precisa estar logado para finalizar o pedido.');
+      setProcessing(false);
+      return;
+    }
 
     try {
       // Validar campos obrigatórios
@@ -81,8 +90,17 @@ const CheckoutPage = () => {
         valorTotal: calculateTotal()
       };
 
+      // Configuração com o token de autenticação
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      };
+
       // Enviar pedido para a API
-      const response = await axios.post('http://localhost:5000/api/pedidos', orderData);
+      // Mude aqui: use API_BASE_URL
+      const response = await axios.post(`${API_BASE_URL}/pedidos`, orderData, config);
       
       // Limpar carrinho
       localStorage.removeItem('cartItems');

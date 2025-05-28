@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; // Ajuste o caminho se necessário
-import './productnewpage.css'; // <--- IMPORTE O CSS AQUI
+import './ProductNewPage.css'; // <--- IMPORTE O CSS AQUI
 
 const ProductNewPage = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth(); // Descomentando para uso do token
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -47,6 +49,12 @@ const ProductNewPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Adicionar verificação de token antes de submeter
+    if (!currentUser || !currentUser.token) {
+        alert('Você precisa estar logado como administrador para criar produtos.');
+        return;
+    }
+
     try {
       // Remover campos de imagem vazios antes de enviar
       const dataToSend = {
@@ -54,7 +62,6 @@ const ProductNewPage = () => {
         imagens: formData.imagens.filter(img => img.trim() !== '')
       };
       
-      // Supondo que você precisa enviar um token de autenticação
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +69,8 @@ const ProductNewPage = () => {
         },
       };
 
-      const response = await axios.post('http://localhost:5000/api/produtos', dataToSend, config);
+      // Mude aqui: use API_BASE_URL
+      const response = await axios.post(`${API_BASE_URL}/produtos`, dataToSend, config);
       alert('Produto criado com sucesso!');
       navigate(`/admin/products`); // Redireciona para a lista de produtos admin
     } catch (error) {

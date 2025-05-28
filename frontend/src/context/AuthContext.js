@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// Defina API_BASE_URL aqui, como já está
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
 export const useAuth = () => {
   return useContext(AuthContext);
 };
@@ -27,7 +30,8 @@ export const AuthProvider = ({ children }) => {
   // Login
   const login = async (email, senha) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users/login', {
+      // Mude aqui: use API_BASE_URL
+      const { data } = await axios.post(`${API_BASE_URL}/users/login`, {
         email,
         senha
       });
@@ -43,7 +47,8 @@ export const AuthProvider = ({ children }) => {
   // Registro
   const register = async (nome, email, senha) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users/register', {
+      // Mude aqui: use API_BASE_URL
+      const { data } = await axios.post(`${API_BASE_URL}/users/register`, {
         nome,
         email,
         senha

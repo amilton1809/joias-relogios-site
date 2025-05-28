@@ -4,37 +4,69 @@ import { FaEye, FaCheck, FaTruck } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuth(); // Descomentando para usar o token
 
   useEffect(() => {
     const fetchOrders = async () => {
+      // Verifique se o usuário está logado e tem um token antes de fazer a requisição
+      if (!currentUser || !currentUser.token) {
+        setError('Você precisa estar logado para ver os pedidos.');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await axios.get('http://localhost:5000/api/pedidos');
+        // Configuração com o token de autenticação
+        const config = {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        };
+        // Mude aqui: use API_BASE_URL
+        const response = await axios.get(`${API_BASE_URL}/pedidos`, config);
         setOrders(response.data);
         setLoading(false);
       } catch (error) {
-        setError('Erro ao carregar pedidos');
+        setError(error.response?.data?.message || 'Erro ao carregar pedidos');
         setLoading(false);
       }
     };
 
-    fetchOrders();
-  }, []);
+    fetchOrders(); // Chama a função ao montar o componente
+  }, [currentUser]); // Adiciona currentUser como dependência para re-executar se o usuário mudar
 
   const updateOrderStatus = async (id, status) => {
+    // Verifique se o usuário está logado e tem um token antes de fazer a requisição
+    if (!currentUser || !currentUser.token) {
+      setError('Você precisa estar logado para atualizar pedidos.');
+      return;
+    }
+
     try {
-      await axios.put(`http://localhost:5000/api/pedidos/${id}/${status}`);
-      
+      // Configuração com o token de autenticação
+      const config = {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      };
+
+      // Mude aqui: use API_BASE_URL
+      await axios.put(`${API_BASE_URL}/pedidos/${id}/${status}`, {}, config); // O segundo parâmetro {} é o body, mesmo que vazio
+
       // Atualizar a lista de pedidos após a mudança de status
-      setOrders(orders.map(order => 
-        order._id === id ? { ...order, [status === 'pagar' ? 'isPago' : 'isEntregue']: true } : order
+      setOrders(orders.map(order =>
+        order._id === id
+          ? { ...order, [status === 'pagar' ? 'isPago' : 'isEntregue']: true }
+          : order
       ));
     } catch (error) {
-      setError('Erro ao atualizar status do pedido');
+      setError(error.response?.data?.message || 'Erro ao atualizar status do pedido');
     }
   };
 
@@ -88,20 +120,21 @@ const Orders = () => {
                     </td>
                     <td>
                       <div className="action-buttons">
+                        {/* A rota de visualização provavelmente precisaria de proteção */}
                         <Link to={`/admin/orders/${order._id}`} className="btn btn-sm btn-info">
                           <FaEye />
                         </Link>
                         {!order.isPago && (
-                          <button 
-                            onClick={() => updateOrderStatus(order._id, 'pagar')} 
+                          <button
+                            onClick={() => updateOrderStatus(order._id, 'pagar')}
                             className="btn btn-sm btn-success"
                           >
                             <FaCheck /> Marcar Pago
                           </button>
                         )}
                         {order.isPago && !order.isEntregue && (
-                          <button 
-                            onClick={() => updateOrderStatus(order._id, 'entregar')} 
+                          <button
+                            onClick={() => updateOrderStatus(order._id, 'entregar')}
                             className="btn btn-sm btn-primary"
                           >
                             <FaTruck /> Marcar Entregue

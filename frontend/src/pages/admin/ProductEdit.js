@@ -4,11 +4,13 @@ import { FaSave, FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
 const ProductEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
-  const isEdit = id !== 'new';
+  const { currentUser } = useAuth(); // Precisaremos do token para autenticação
+  const isEdit = id !== 'new'; // 'new' indica que é um novo produto, não edição
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -26,21 +28,36 @@ const ProductEdit = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (isEdit) {
-      const fetchProduct = async () => {
-        try {
-          const response = await axios.get(`http://localhost:5000/api/produtos/${id}`);
-          setFormData(response.data);
-          setLoading(false);
-        } catch (error) {
-          setError('Erro ao carregar produto');
-          setLoading(false);
-        }
-      };
+    const fetchProduct = async () => {
+      // Verificação de autenticação e token antes da requisição
+      if (!currentUser || !currentUser.token) {
+        setError('Você não está autorizado a editar produtos. Faça login como administrador.');
+        setLoading(false);
+        return;
+      }
 
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        };
+        // Use API_BASE_URL para a requisição GET
+        const response = await axios.get(`${API_BASE_URL}/produtos/${id}`, config);
+        setFormData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.response?.data?.message || 'Erro ao carregar produto');
+        setLoading(false);
+      }
+    };
+
+    if (isEdit) { // Apenas busca se for um produto existente (edição)
       fetchProduct();
+    } else { // Se for um novo produto, não precisa buscar, apenas inicializar o formulário
+        setLoading(false);
     }
-  }, [id, isEdit]);
+  }, [id, isEdit, currentUser]); // Adicione currentUser como dependência
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -80,6 +97,13 @@ const ProductEdit = () => {
     setError('');
     setSubmitting(true);
 
+    // Verificação de autenticação e token antes da requisição POST/PUT
+    if (!currentUser || !currentUser.token) {
+      setError('Você não está autorizado a salvar produtos. Faça login como administrador.');
+      setSubmitting(false);
+      return;
+    }
+
     try {
       // Validar campos obrigatórios
       if (!formData.nome || !formData.descricao || !formData.marca || formData.preco <= 0) {
@@ -94,13 +118,22 @@ const ProductEdit = () => {
         imagens: formData.imagens.filter(img => img.trim() !== '')
       };
 
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUser.token}`, // Token para autenticação
+        },
+      };
+
       if (isEdit) {
-        await axios.put(`http://localhost:5000/api/produtos/${id}`, cleanedFormData);
+        // Use API_BASE_URL para a requisição PUT
+        await axios.put(`${API_BASE_URL}/produtos/${id}`, cleanedFormData, config);
       } else {
-        await axios.post('http://localhost:5000/api/produtos', cleanedFormData);
+        // Use API_BASE_URL para a requisição POST (criação de produto)
+        await axios.post(`${API_BASE_URL}/produtos`, cleanedFormData, config);
       }
 
-      navigate('/admin/products');
+      navigate('/admin/products'); // Redireciona para a lista de produtos após salvar
     } catch (error) {
       setError(error.response?.data?.message || 'Erro ao salvar produto');
       setSubmitting(false);

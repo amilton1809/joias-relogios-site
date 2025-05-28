@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom'; // <-- ADICIONE 'Link' AQUI
 import { FaShoppingCart, FaStar, FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext'; // Mantido caso precise do currentUser para outras lógicas, mas não para a requisição GET
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
-  
+  const { currentUser } = useAuth(); // Não utilizado na requisição GET, mas pode ser usado para outras coisas
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -18,20 +20,21 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/produtos/${id}`);
+        // Mude aqui: use API_BASE_URL
+        const response = await axios.get(`${API_BASE_URL}/produtos/${id}`);
         setProduct(response.data);
         setLoading(false);
       } catch (error) {
-        setError('Erro ao carregar detalhes do produto');
+        setError(error.response?.data?.message || 'Erro ao carregar detalhes do produto');
         setLoading(false);
       }
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id]); // Dependência 'id' para recarregar se o ID do produto na URL mudar
 
   const handleAddToCart = () => {
-    // Implementação do carrinho de compras
+    // Implementação do carrinho de compras (esta lógica não faz requisição de API)
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     
     // Verificar se o produto já está no carrinho
@@ -176,6 +179,7 @@ const ProductDetailPage = () => {
         
         <div className="related-products">
           <h2>Produtos Relacionados</h2>
+          {/* Se esta seção buscar produtos relacionados da API, a chamada também precisaria usar API_BASE_URL */}
           <p>Carregando produtos relacionados...</p>
         </div>
       </div>

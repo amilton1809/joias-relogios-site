@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,17 +13,18 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/produtos');
+        // Mude aqui: use API_BASE_URL
+        const response = await axios.get(`${API_BASE_URL}/produtos`);
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
-        setError('Erro ao carregar produtos');
+        setError(error.response?.data?.message || 'Erro ao carregar produtos');
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, []); // Array de dependências vazio, a busca é feita apenas uma vez ao montar o componente
 
   return (
     <div className="products-page">

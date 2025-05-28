@@ -5,6 +5,8 @@ import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 import '../categoryPage.css'
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
 const CategoryPage = () => {
   const { categoria } = useParams();
   const [products, setProducts] = useState([]);
@@ -20,7 +22,10 @@ const CategoryPage = () => {
     const fetchProducts = async () => {
       try {
         // Em um ambiente real, seria uma chamada à API com filtro por categoria
-        const response = await axios.get('http://localhost:5000/api/produtos');
+        // Mude aqui: use API_BASE_URL
+        // Idealmente, você passaria a categoria como query param para o backend,
+        // mas dado o filtro atual no frontend, a chamada é para todos os produtos.
+        const response = await axios.get(`${API_BASE_URL}/produtos`);
         
         // Filtrar por categoria se especificada
         const filteredByCategory = categoria 
@@ -31,13 +36,13 @@ const CategoryPage = () => {
         setFilteredProducts(filteredByCategory);
         setLoading(false);
       } catch (error) {
-        setError('Erro ao carregar produtos');
+        setError(error.response?.data?.message || 'Erro ao carregar produtos');
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [categoria]);
+  }, [categoria]); // categoria é uma dependência importante aqui
 
   useEffect(() => {
     // Aplicar filtros e ordenação
@@ -96,7 +101,8 @@ const CategoryPage = () => {
 
   const getCategoryTitle = () => {
     if (!categoria) return 'Todos os Produtos';
-    return categoria === 'joias' ? 'Joias' : 'Relógios';
+    // Capitalize a primeira letra
+    return categoria.charAt(0).toUpperCase() + categoria.slice(1);
   };
 
   return (
