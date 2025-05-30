@@ -1,0 +1,467 @@
+:root {
+  --primary-color: #8a2be2;
+  --secondary-color: #4b0082;
+  --accent-color: #ffd700;
+  --text-color: #333;
+  --light-text: #fff;
+  --light-bg: #f8f9fa;
+  --dark-bg: #343a40;
+  --border-color: #dee2e6;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: var(--secondary-color);
+}
+
+/* Estilos para botões genéricos */
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    white-space: nowrap; /* Evita que o texto do botão quebre a linha */
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--light-text);
+    border: 2px solid var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+
+/* Estilos para a página inicial */
+.home-page {
+    padding-bottom: 40px; /* Espaçamento no final da página */
+}
+
+/* Seção Hero */
+.hero {
+    /* Usando o light-bg que é um branco bem suave */
+    background-color: var(--light-bg);
+    color: var(--text-color); /* Ajustado para a cor de texto padrão */
+    padding: 100px 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    box-shadow: inset 0 -10px 15px rgba(0,0,0,0.02); /* Sombra mais sutil ainda */
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: var(--primary-color); /* Destaque com a cor primária */
+    text-shadow: none;
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* Reutilizando a barra de busca do CategoryPage.css */
+.search-bar {
+    display: flex;
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 0 auto 30px auto; /* Centraliza e adiciona margem inferior */
+    max-width: 500px; /* Limita o tamanho para o hero */
+    background-color: var(--light-text); /* Fundo branco para o input */
+}
+
+.search-bar input {
+    border: none;
+    padding: 12px 20px;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1.1em;
+}
+
+.search-bar button {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button:hover {
+    background-color: var(--secondary-color);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Garante que os botões quebrem a linha */
+}
+
+
+/* Seção de Produtos em Destaque (reutilizando grid) */
+.featured-products {
+    padding: 60px 0;
+    background-color: var(--light-bg);
+}
+
+.featured-products h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    color: var(--secondary-color);
+}
+
+/* Reutilizando o grid de produtos do CategoryPage.css */
+/* Grid de produtos (reutilizando estilos do CategoryPage e HomePage) */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding-top: 10px;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.product-card-image-container {
+    width: 100%;
+    height: 220px; /* Ajuste a altura da imagem para os produtos em destaque */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.product-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.product-card-details {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    /* ALTERAÇÃO AQUI: Garante que os itens dentro de details fiquem em coluna */
+    flex-direction: column;
+    /* justify-content: space-between; -- Pode ser removido se não for mais necessário um espaçamento 'inteligente' no details */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    gap: 5px; /* Adiciona um pequeno espaçamento entre os elementos do details */
+    box-sizing: border-box; /* Importante para o padding */
+}
+
+/* Adicionando estilo para a marca, se ela for um elemento separado */
+/* Assumindo que a marca seja um <p> ou <span> dentro de .product-card-details */
+.product-card-details .brand-name { /* Adicione uma classe 'brand-name' à sua marca no HTML */
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin-bottom: 5px; /* Espaçamento após a marca */
+}
+
+.product-card h3 {
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 5px; /* Ajuste para ter espaçamento com a marca ou preço */
+    min-height: auto; /* Pode remover min-height se não for mais necessário forçar altura */
+    line-height: 1.3; /* Melhora a quebra de linha para nomes longos */
+}
+
+.product-card p.price {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 5px; /* Espaçamento antes do preço */
+    margin-bottom: 15px; /* Espaçamento antes dos botões */
+}
+
+/* Modificação aqui para os botões do ProductCard */
+.product-card button {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box; /* Crucial para o botão */
+    margin-top: 8px; /* Espaçamento entre os botões */
+    margin-bottom: 0; /* Remove a margem extra do último botão */
+    display: block; /* Garante que os botões ocupem a largura total e fiquem um abaixo do outro */
+}
+
+.product-card button:first-of-type {
+    margin-top: auto; /* Empurra o primeiro botão para o final, se estiver usando justify-content: space-between no details */
+}
+
+.product-card button:last-of-type {
+    margin-bottom: 0; /* Remove a margem extra do último botão */
+}
+
+
+.product-card button:hover {
+    background-color: var(--secondary-color);
+}
+
+
+/* Seção de Categorias */
+.categories {
+    padding: 60px 0;
+    /* Mudando de var(--dark-bg) para um fundo mais claro, como o light-bg ou um cinza bem claro */
+    background-color: var(--light-bg); /* Usando o mesmo branco suave do hero */
+    color: var(--text-color); /* Ajustado para cor de texto padrão, já que o fundo é claro */
+    border-top: 1px solid var(--border-color); /* Adiciona uma linha para separação sutil */
+}
+
+.categories h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    color: var(--secondary-color); /* Mantendo a cor do título para destaque */
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.category-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.category-card img {
+    width: 100%;
+    height: 250px; /* Altura fixa para as imagens das categorias */
+    object-fit: cover; /* Cobre o espaço, cortando se necessário */
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.category-card h3 {
+    font-size: 1.5em;
+    margin: 20px 0 15px;
+    color: var(--secondary-color);
+}
+
+.category-card .btn-outline {
+    margin-bottom: 20px;
+    align-self: center; /* Centraliza o botão dentro do flex column */
+}
+
+/* Seção Sobre Nós */
+.about-section {
+    padding: 80px 0;
+    background-color: var(--light-bg);
+}
+
+.about-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.about-content p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+
+/* Responsividade para todas as seções */
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 2.8em;
+    }
+    .hero-content p {
+        font-size: 1.1em;
+    }
+    .products-grid, .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 0;
+        min-height: 400px;
+    }
+    .hero-content h1 {
+        font-size: 2.2em;
+    }
+    .hero-content p {
+        font-size: 1em;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .hero-buttons .btn {
+        width: 100%;
+    }
+    .featured-products h2, .categories h2, .about-content h2 {
+        font-size: 2em;
+    }
+    .products-grid, .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .product-card-image-container {
+        height: 180px;
+    }
+    .category-card img {
+        height: 200px;
+    }
+    .about-content {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    .hero {
+        padding: 60px 0;
+        min-height: 350px;
+    }
+    .hero-content h1 {
+        font-size: 1.8em;
+    }
+    .hero-content p {
+        font-size: 0.9em;
+    }
+    .search-bar {
+        margin-bottom: 20px;
+    }
+    .search-bar input,
+    .search-bar button {
+        padding: 10px 15px;
+    }
+    .featured-products h2, .categories h2, .about-content h2 {
+        font-size: 1.8em;
+    }
+    .products-grid, .categories-grid {
+        grid-template-columns: 1fr; /* Uma única coluna em telas muito pequenas */
+        gap: 15px;
+    }
+    .product-card-image-container {
+        height: 160px;
+    }
+    .category-card img {
+        height: 180px;
+    }
+    .product-card h3 {
+        font-size: 1em;
+    }
+    .product-card p.price {
+        font-size: 1.2em;
+    }
+    .about-content {
+        padding: 20px;
+    }
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaTrash, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
+import './CartPage.css'
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);

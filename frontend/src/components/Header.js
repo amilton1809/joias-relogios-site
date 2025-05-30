@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaShoppingCart, FaSignOutAlt, FaUserShield } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import './header.css'
+import './Header.css'
 
 const Header = () => {
   const [cartItems, setCartItems] = useState([]);

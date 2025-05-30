@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { FaFilter, FaSort, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
-import '../categoryPage.css'
+import './CategoryPage.css'
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaEye } from 'react-icons/fa';
+import './ProductCard.css'
 
 const ProductCard = ({ product }) => {
   return (

@@ -1,0 +1,291 @@
+:root {
+  --primary-color: #8a2be2;
+  --secondary-color: #4b0082;
+  --accent-color: #ffd700;
+  --text-color: #333;
+  --light-text: #fff;
+  --light-bg: #f8f9fa;
+  --dark-bg: #343a40;
+  --border-color: #dee2e6;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: var(--secondary-color);
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+
+/* Estilos para a página de Produtos */
+.products-page {
+    padding: 40px 0;
+    background-color: var(--light-bg);
+}
+
+.products-page h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.8em;
+    color: var(--primary-color);
+}
+
+/* Navegação de Categorias no topo da página de produtos */
+.category-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+    flex-wrap: wrap; /* Permite que os cards quebrem a linha */
+}
+
+.category-navigation .category-link {
+    text-decoration: none;
+    color: inherit; /* Herda a cor do texto padrão */
+}
+
+.category-navigation .category-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 250px; /* Largura fixa para os cards de categoria aqui */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.category-navigation .category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-navigation .category-card img {
+    width: 100%;
+    height: 180px; /* Altura fixa para a imagem do card de categoria */
+    object-fit: cover; /* Cobre o espaço, cortando se necessário */
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.category-navigation .category-card h3 {
+    font-size: 1.4em;
+    margin: 15px 0 15px;
+    color: var(--secondary-color);
+    padding: 0 10px; /* Espaçamento interno */
+}
+
+
+/* Grid de produtos (reutilizando estilos do CategoryPage e HomePage) */
+/* Grid de produtos (reutilizando estilos do CategoryPage e HomePage) */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding-top: 10px;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.product-card-image-container {
+    width: 100%;
+    height: 220px; /* Ajuste a altura da imagem para os produtos em destaque */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.product-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.product-card-details {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    /* ALTERAÇÃO AQUI: Garante que os itens dentro de details fiquem em coluna */
+    flex-direction: column;
+    /* justify-content: space-between; -- Pode ser removido se não for mais necessário um espaçamento 'inteligente' no details */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    gap: 5px; /* Adiciona um pequeno espaçamento entre os elementos do details */
+    box-sizing: border-box; /* Importante para o padding */
+}
+
+/* Adicionando estilo para a marca, se ela for um elemento separado */
+/* Assumindo que a marca seja um <p> ou <span> dentro de .product-card-details */
+.product-card-details .brand-name { /* Adicione uma classe 'brand-name' à sua marca no HTML */
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin-bottom: 5px; /* Espaçamento após a marca */
+}
+
+.product-card h3 {
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 5px; /* Ajuste para ter espaçamento com a marca ou preço */
+    min-height: auto; /* Pode remover min-height se não for mais necessário forçar altura */
+    line-height: 1.3; /* Melhora a quebra de linha para nomes longos */
+}
+
+.product-card p.price {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 5px; /* Espaçamento antes do preço */
+    margin-bottom: 15px; /* Espaçamento antes dos botões */
+}
+
+/* Modificação aqui para os botões do ProductCard */
+.product-card button {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box; /* Crucial para o botão */
+    margin-top: 8px; /* Espaçamento entre os botões */
+    margin-bottom: 0; /* Remove a margem extra do último botão */
+    display: block; /* Garante que os botões ocupem a largura total e fiquem um abaixo do outro */
+}
+
+.product-card button:first-of-type {
+    margin-top: auto; /* Empurra o primeiro botão para o final, se estiver usando justify-content: space-between no details */
+}
+
+.product-card button:last-of-type {
+    margin-bottom: 0; /* Remove a margem extra do último botão */
+}
+
+
+.product-card button:hover {
+    background-color: var(--secondary-color);
+}
+
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .products-page h1 {
+        font-size: 2.5em;
+    }
+    .category-navigation {
+        gap: 20px;
+    }
+    .category-navigation .category-card {
+        width: 200px;
+    }
+    .category-navigation .category-card img {
+        height: 150px;
+    }
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .products-page h1 {
+        font-size: 2em;
+    }
+    .category-navigation {
+        flex-direction: column; /* Empilha os cards de categoria */
+        align-items: center;
+    }
+    .category-navigation .category-card {
+        width: 80%; /* Ocupa mais largura em telas menores */
+        max-width: 300px; /* Limita para não ficar muito grande */
+    }
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .product-card-image-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    .products-page h1 {
+        font-size: 1.8em;
+    }
+    .category-navigation {
+        gap: 15px;
+    }
+    .category-navigation .category-card {
+        width: 90%;
+        height: unset; /* Permite que a altura se ajuste */
+    }
+    .category-navigation .category-card img {
+        height: 120px;
+    }
+    .products-grid {
+        grid-template-columns: 1fr; /* Uma única coluna em telas muito pequenas */
+    }
+    .product-card-image-container {
+        height: 160px;
+    }
+    .product-card h3 {
+        font-size: 1.1em;
+    }
+    .product-card p.price {
+        font-size: 1.3em;
+    }
+}

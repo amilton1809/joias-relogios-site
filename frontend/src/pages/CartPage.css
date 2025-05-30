@@ -1,0 +1,408 @@
+/* Variáveis de cores - Manter aqui se for o único arquivo CSS, caso contrário, mover para um global.css */
+:root {
+  --primary-color: #8a2be2;
+  --secondary-color: #4b0082;
+  --accent-color: #ffd700;
+  --text-color: #333;
+  --light-text: #fff;
+  --light-bg: #f8f9fa;
+  --dark-bg: #343a40;
+  --border-color: #dee2e6;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Adiciona box-sizing globalmente para evitar problemas de layout */
+    box-sizing: border-box; 
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: var(--secondary-color);
+}
+
+/* Base dos botões (Manter aqui se não houver um global.css, ou mover para um global.css e remover daqui) */
+.btn {
+    display: inline-flex; /* Usar flexbox para alinhar ícone e texto */
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo do botão */
+    gap: 8px; /* Espaçamento entre ícone e texto */
+    padding: 10px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 1em; /* Tamanho base para o texto do botão */
+    box-sizing: border-box; /* Garante que padding não cause corte */
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--light-text);
+    border: 2px solid var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+.btn-block {
+    width: 100%;
+    /* Display já é flex por padrão do .btn */
+    margin-bottom: 10px; /* Espaçamento entre botões bloco */
+    box-sizing: border-box; /* Essencial para que width:100% + padding não cortem */
+}
+
+
+/* Estilos para a página do Carrinho */
+.cart-page {
+    padding: 40px 0;
+    background-color: var(--light-bg);
+}
+
+.cart-page h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.8em;
+    color: var(--primary-color);
+}
+
+/* Carrinho Vazio */
+.empty-cart {
+    text-align: center;
+    padding: 80px 20px;
+    background-color: #fff;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.empty-cart p {
+    font-size: 1.5em;
+    color: var(--text-color);
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.empty-cart .btn {
+    padding: 12px 30px;
+    font-size: 1.1em;
+}
+
+/* Conteúdo do Carrinho (quando há itens) */
+.cart-content {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 30px;
+}
+
+.cart-items {
+    flex: 3;
+    min-width: 60%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow-x: auto; /* Permite rolagem horizontal em tabelas pequenas */
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    color: var(--text-color);
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle; /* Alinha o conteúdo verticalmente ao meio */
+}
+
+.cart-table th {
+    background-color: var(--secondary-color);
+    color: var(--light-text);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.cart-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ----- CORREÇÕES AQUI ----- */
+.product-info {
+    display: flex;
+    flex-direction: column; /* FORÇA IMAGEM E NOME A FICAREM EM COLUNA */
+    align-items: flex-start; /* Alinha imagem e texto à esquerda */
+    gap: 10px; /* Espaçamento entre a imagem e o nome do produto */
+    min-width: 180px; /* Reduzi o min-width para dar mais espaço à tabela geral */
+}
+
+.product-info img {
+    width: 80px; /* Tamanho fixo para imagens de produtos no carrinho */
+    height: 80px;
+    object-fit: contain; /* Redimensiona para caber sem cortar */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    flex-shrink: 0; /* Impede que a imagem encolha */
+}
+
+.product-info a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+    transition: color 0.3s ease;
+    /* Permite que o texto quebre a linha se for muito longo */
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+    white-space: normal; /* Garante que o texto quebre a linha */
+    max-width: 100%; /* Garante que o link não ultrapasse o td */
+    box-sizing: border-box; /* Importante para o link dentro do product-info */
+}
+
+.product-info a:hover {
+    color: var(--primary-color);
+}
+
+/* Seletor de Quantidade */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+    width: 120px; /* Largura fixa para o seletor */
+    box-sizing: border-box; /* Essencial para evitar corte */
+}
+
+.quantity-selector button {
+    background-color: var(--light-bg);
+    color: var(--primary-color);
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    box-sizing: border-box; /* Essencial */
+}
+
+.quantity-selector button:hover {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+.quantity-selector input {
+    width: 40px; /* Largura do input */
+    text-align: center;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: 8px 0;
+    outline: none;
+    font-size: 1em;
+    box-sizing: border-box; /* Essencial para o input numérico */
+}
+
+.quantity-selector input::-webkit-outer-spin-button,
+.quantity-selector input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Botão Remover */
+.btn-remove {
+    background-color: var(--danger-color);
+    color: var(--light-text);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Essencial */
+}
+
+.btn-remove:hover {
+    background-color: #bb2d3b; /* Cor para hover do danger-color */
+}
+
+
+/* Resumo do Carrinho */
+.cart-summary {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+
+.cart-summary h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.summary-item:last-of-type {
+    border-bottom: none;
+}
+
+.summary-item span {
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+
+.summary-item.total {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--primary-color);
+    border-top: 2px solid var(--primary-color);
+    padding-top: 15px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .cart-content {
+        flex-direction: column;
+    }
+    .cart-items, .cart-summary {
+        min-width: unset;
+        width: 100%;
+    }
+    .cart-summary {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-page h1 {
+        font-size: 2.2em;
+    }
+    .cart-table th, .cart-table td {
+        padding: 10px;
+    }
+    .product-info {
+        /* Garante que imagem e nome fiquem em coluna em telas menores */
+        flex-direction: column; 
+        align-items: flex-start;
+        text-align: left;
+        gap: 10px;
+    }
+    .product-info img {
+        width: 60px;
+        height: 60px;
+    }
+    .cart-items {
+        overflow-x: auto;
+    }
+    .cart-table {
+        min-width: 600px; /* Garante que a tabela não se "quebre" demais */
+    }
+    .empty-cart p {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    .cart-page h1 {
+        font-size: 1.8em;
+    }
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    .empty-cart .btn {
+        width: 100%;
+        font-size: 1em;
+    }
+    .quantity-selector {
+        width: 100px;
+    }
+    .quantity-selector button {
+        padding: 6px 10px;
+    }
+    .quantity-selector input {
+        width: 30px;
+    }
+    .cart-summary {
+        padding: 20px;
+    }
+    .summary-item span {
+        font-size: 1em;
+    }
+    .summary-item.total {
+        font-size: 1.1em;
+    }
+}
