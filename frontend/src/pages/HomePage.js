@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import { FaSearch } from 'react-icons/fa';
 import './HomePage.css'
-import pulseiraImg from '../img/pulseira.webp'; //Importando imagem
 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -101,7 +100,7 @@ const HomePage = () => {
           <h2>Categorias</h2>
           <div className="categories-grid">
             <div className="category-card">
-              <img src={pulseiraImg} alt="Joias" />
+              <img src="../img/pulseira1.webp" alt="Joias" />
               <h3>Joias</h3>
               <a href="/produtos/joias" className="btn btn-outline">Ver Coleção</a>
             </div>
