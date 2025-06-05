@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FaShoppingCart, FaStar, FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // Mantido caso precise do currentUser para outras lógicas, mas não para a requisição GET
+import { useAuth } from '../context/AuthContext'; 
+import './ProductDetailPage.css'
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
