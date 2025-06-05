@@ -21,10 +21,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Em um ambiente real, seria uma chamada à API com filtro por categoria
-        // Mude aqui: use API_BASE_URL
-        // Idealmente, você passaria a categoria como query param para o backend,
-        // mas dado o filtro atual no frontend, a chamada é para todos os produtos.
+        
         const response = await axios.get(`${API_BASE_URL}/produtos`);
         
         // Filtrar por categoria se especificada

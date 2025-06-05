@@ -80,21 +80,20 @@ h1, h2, h3 {
 
 /* Estilos para a página inicial */
 .home-page {
-    padding-bottom: 40px; /* Espaçamento no final da página */
+    padding-bottom: 40px; 
 }
 
 /* Seção Hero */
 .hero {
-    /* Usando o light-bg que é um branco bem suave */
     background-color: var(--light-bg);
-    color: var(--text-color); /* Ajustado para a cor de texto padrão */
+    color: var(--text-color); 
     padding: 100px 0;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 500px;
-    box-shadow: inset 0 -10px 15px rgba(0,0,0,0.02); /* Sombra mais sutil ainda */
+    box-shadow: inset 0 -10px 15px rgba(0,0,0,0.02); 
 }
 
 .hero-content {
@@ -117,15 +116,15 @@ h1, h2, h3 {
     color: var(--text-color);
 }
 
-/* Reutilizando a barra de busca do CategoryPage.css */
+
 .search-bar {
     display: flex;
     border: 1px solid var(--border-color);
     border-radius: 25px;
     overflow: hidden;
-    margin: 0 auto 30px auto; /* Centraliza e adiciona margem inferior */
-    max-width: 500px; /* Limita o tamanho para o hero */
-    background-color: var(--light-text); /* Fundo branco para o input */
+    margin: 0 auto 30px auto; 
+    max-width: 500px; 
+    background-color: var(--light-text); 
 }
 
 .search-bar input {
@@ -173,8 +172,7 @@ h1, h2, h3 {
     color: var(--secondary-color);
 }
 
-/* Reutilizando o grid de produtos do CategoryPage.css */
-/* Grid de produtos (reutilizando estilos do CategoryPage e HomePage) */
+/* Reutilizando o grid de produtos */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -221,29 +219,27 @@ h1, h2, h3 {
     padding: 15px;
     flex-grow: 1;
     display: flex;
-    /* ALTERAÇÃO AQUI: Garante que os itens dentro de details fiquem em coluna */
     flex-direction: column;
-    /* justify-content: space-between; -- Pode ser removido se não for mais necessário um espaçamento 'inteligente' no details */
-    justify-content: flex-start; /* Alinha o conteúdo ao topo */
-    gap: 5px; /* Adiciona um pequeno espaçamento entre os elementos do details */
-    box-sizing: border-box; /* Importante para o padding */
+    justify-content: flex-start; 
+    gap: 5px; 
+    box-sizing: border-box; 
 }
 
 /* Adicionando estilo para a marca, se ela for um elemento separado */
 /* Assumindo que a marca seja um <p> ou <span> dentro de .product-card-details */
-.product-card-details .brand-name { /* Adicione uma classe 'brand-name' à sua marca no HTML */
+.product-card-details .brand-name { 
     font-size: 0.9em;
     color: var(--text-color);
-    margin-bottom: 5px; /* Espaçamento após a marca */
+    margin-bottom: 5px; 
 }
 
 .product-card h3 {
     font-size: 1.2em;
     color: var(--secondary-color);
     margin-top: 0;
-    margin-bottom: 5px; /* Ajuste para ter espaçamento com a marca ou preço */
-    min-height: auto; /* Pode remover min-height se não for mais necessário forçar altura */
-    line-height: 1.3; /* Melhora a quebra de linha para nomes longos */
+    margin-bottom: 5px; 
+    min-height: auto; 
+    line-height: 1.3; 
 }
 
 .product-card p.price {
@@ -265,18 +261,18 @@ h1, h2, h3 {
     font-size: 0.9em;
     transition: background-color 0.3s ease;
     width: 100%;
-    box-sizing: border-box; /* Crucial para o botão */
-    margin-top: 8px; /* Espaçamento entre os botões */
-    margin-bottom: 0; /* Remove a margem extra do último botão */
-    display: block; /* Garante que os botões ocupem a largura total e fiquem um abaixo do outro */
+    box-sizing: border-box; 
+    margin-top: 8px; 
+    margin-bottom: 0; 
+    display: block; 
 }
 
 .product-card button:first-of-type {
-    margin-top: auto; /* Empurra o primeiro botão para o final, se estiver usando justify-content: space-between no details */
+    margin-top: auto; 
 }
 
 .product-card button:last-of-type {
-    margin-bottom: 0; /* Remove a margem extra do último botão */
+    margin-bottom: 0; 
 }
 
 
@@ -288,17 +284,16 @@ h1, h2, h3 {
 /* Seção de Categorias */
 .categories {
     padding: 60px 0;
-    /* Mudando de var(--dark-bg) para um fundo mais claro, como o light-bg ou um cinza bem claro */
-    background-color: var(--light-bg); /* Usando o mesmo branco suave do hero */
-    color: var(--text-color); /* Ajustado para cor de texto padrão, já que o fundo é claro */
-    border-top: 1px solid var(--border-color); /* Adiciona uma linha para separação sutil */
+    background-color: var(--light-bg); 
+    color: var(--text-color); 
+    border-top: 1px solid var(--border-color); 
 }
 
 .categories h2 {
     text-align: center;
     margin-bottom: 40px;
     font-size: 2.5em;
-    color: var(--secondary-color); /* Mantendo a cor do título para destaque */
+    color: var(--secondary-color); 
 }
 
 .categories-grid {
@@ -325,7 +320,7 @@ h1, h2, h3 {
 
 .category-card img {
     width: 100%;
-    height: 250px; /* Altura fixa para as imagens das categorias */
+    height: 300px; /* Altura fixa para as imagens das categorias */
     object-fit: cover; /* Cobre o espaço, cortando se necessário */
     display: block;
     border-bottom: 1px solid var(--border-color);

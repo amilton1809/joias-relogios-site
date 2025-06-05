@@ -1,0 +1,180 @@
+.admin-orders {
+  padding: 40px 20px;
+  background-color: var(--light-bg); /* Assume que você tem variáveis CSS globais */
+  color: var(--text-color);
+}
+
+.admin-orders h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+.alert { /* Estilo básico para mensagens de erro */
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.table-responsive {
+  overflow-x: auto; /* Permite scroll horizontal em tabelas grandes */
+  -webkit-overflow-scrolling: touch; /* Melhora o scroll em dispositivos iOS */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Colapsa as bordas da tabela */
+  margin-top: 20px;
+  background-color: #fff; /* Fundo branco para a tabela */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra suave */
+  border-radius: 8px; /* Bordas arredondadas */
+  overflow: hidden; /* Garante que o border-radius funcione com overflow */
+}
+
+.table thead {
+  background-color: var(--secondary-color);
+  color: var(--light-text);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color); /* Linhas separadoras */
+  white-space: nowrap; /* Evita que o texto quebre em várias linhas */
+}
+
+.table tbody tr:hover {
+  background-color: var(--hover-bg); /* Cor de fundo ao passar o mouse */
+}
+
+.badge {
+  padding: 0.4em 0.6em;
+  border-radius: 0.25rem;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  display: inline-block;
+}
+
+.badge.bg-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px; /* Espaçamento entre os botões de ação */
+  flex-wrap: wrap; /* Permite que os botões quebrem a linha se não houver espaço */
+}
+
+.btn { /* Estilos genéricos de botão, se ainda não definidos globalmente */
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-sm {
+  padding: 5px 10px; /* Botões menores */
+  font-size: 0.875rem;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-primary { /* Usado para Marcar Entregue */
+  background-color: var(--primary-color);
+  color: var(--light-text);
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Responsividade para a tabela */
+@media (max-width: 768px) {
+  .table thead {
+    display: none; /* Esconde o cabeçalho em telas pequenas */
+  }
+
+  .table, .table tbody, .table tr, .table td {
+    display: block; /* Faz com que as células se comportem como blocos */
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .table td {
+    text-align: right; /* Alinha o conteúdo à direita */
+    padding-left: 50%; /* Dá espaço para o "pseudo-cabeçalho" */
+    position: relative;
+  }
+
+  .table td::before {
+    content: attr(data-label); /* Usa o atributo data-label como "cabeçalho" */
+    position: absolute;
+    left: 15px;
+    width: calc(50% - 30px);
+    text-align: left;
+    font-weight: bold;
+    color: var(--secondary-color);
+  }
+
+  .action-buttons {
+    justify-content: flex-end; /* Alinha os botões à direita em telas pequenas */
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-orders {
+    padding: 20px 10px;
+  }
+
+  .action-buttons .btn {
+    width: 100%; /* Botões de ação ocupam 100% da largura em telas muito pequenas */
+    margin-bottom: 5px; /* Espaçamento entre os botões */
+  }
+}

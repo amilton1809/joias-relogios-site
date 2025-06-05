@@ -14,7 +14,7 @@
   --info-color: #17a2b8;
 }
 
-/* Estilos Globais para o corpo da página e reset básico */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -30,7 +30,7 @@ body {
     padding: 20px;
 }
 
-/* Estilos para a página de categoria */
+
 .category-page {
     padding: 20px 0;
 }
@@ -40,8 +40,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
-    gap: 15px; /* Espaçamento entre os itens */
+    flex-wrap: wrap; 
+    gap: 15px; 
 }
 
 .category-header h1 {
@@ -55,7 +55,7 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 25px;
     overflow: hidden;
-    flex-grow: 1; /* Permite que a barra de busca ocupe espaço disponível */
+    flex-grow: 1; 
     max-width: 400px; /* Limita o tamanho máximo */
 }
 
@@ -98,7 +98,7 @@ body {
 }
 
 .filter-toggle:hover {
-    background-color: #e6c200; /* Um tom ligeiramente mais escuro para o hover */
+    background-color: #e6c200; 
 }
 
 /* Seção de filtros */
@@ -109,7 +109,7 @@ body {
     padding: 20px;
     margin-bottom: 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colunas responsivas */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     max-height: 0;
     overflow: hidden;
@@ -119,7 +119,7 @@ body {
 }
 
 .filters-section.show {
-    max-height: 500px; /* Um valor grande o suficiente para a seção se expandir */
+    max-height: 500px; 
     padding: 20px;
     opacity: 1;
     visibility: visible;
@@ -288,38 +288,36 @@ body {
     padding: 15px;
     flex-grow: 1;
     display: flex;
-    /* ALTERAÇÃO AQUI: Garante que os itens dentro de details fiquem em coluna */
     flex-direction: column;
-    /* justify-content: space-between; -- Pode ser removido se não for mais necessário um espaçamento 'inteligente' no details */
-    justify-content: flex-start; /* Alinha o conteúdo ao topo */
-    gap: 5px; /* Adiciona um pequeno espaçamento entre os elementos do details */
-    box-sizing: border-box; /* Importante para o padding */
+    justify-content: flex-start; 
+    gap: 5px; 
+    box-sizing: border-box; 
 }
 
-.product-card-details .brand-name { /* Adicione uma classe 'brand-name' à sua marca no HTML */
+.product-card-details .brand-name { 
     font-size: 0.9em;
     color: var(--text-color);
-    margin-bottom: 5px; /* Espaçamento após a marca */
+    margin-bottom: 5px; 
 }
 
 .product-card h3 {
     font-size: 1.2em;
     color: var(--secondary-color);
     margin-top: 0;
-    margin-bottom: 5px; /* Ajuste para ter espaçamento com a marca ou preço */
-    min-height: auto; /* Pode remover min-height se não for mais necessário forçar altura */
-    line-height: 1.3; /* Melhora a quebra de linha para nomes longos */
+    margin-bottom: 5px; 
+    min-height: auto; 
+    line-height: 1.3; 
 }
 
 .product-card p.price {
     font-size: 1.4em;
     font-weight: bold;
     color: var(--primary-color);
-    margin-top: 5px; /* Espaçamento antes do preço */
-    margin-bottom: 15px; /* Espaçamento antes dos botões */
+    margin-top: 5px; 
+    margin-bottom: 15px; 
 }
 
-/* Modificação aqui para os botões do ProductCard */
+
 .product-card button {
     background-color: var(--primary-color);
     color: var(--light-text);
@@ -331,17 +329,17 @@ body {
     transition: background-color 0.3s ease;
     width: 100%;
     box-sizing: border-box; /* Crucial para o botão */
-    margin-top: 8px; /* Espaçamento entre os botões */
-    margin-bottom: 0; /* Remove a margem extra do último botão */
-    display: block; /* Garante que os botões ocupem a largura total e fiquem um abaixo do outro */
+    margin-top: 8px; 
+    margin-bottom: 0; 
+    display: block; 
 }
 
 .product-card button:first-of-type {
-    margin-top: auto; /* Empurra o primeiro botão para o final, se estiver usando justify-content: space-between no details */
+    margin-top: auto; 
 }
 
 .product-card button:last-of-type {
-    margin-bottom: 0; /* Remove a margem extra do último botão */
+    margin-bottom: 0; 
 }
 
 
@@ -364,16 +362,16 @@ body {
 
     .search-bar {
         width: 100%;
-        max-width: none; /* Remove a limitação de largura em telas menores */
+        max-width: none; 
     }
 
     .filter-toggle {
         width: 100%;
-        justify-content: center; /* Centraliza o ícone e texto */
+        justify-content: center; 
     }
 
     .filters-section {
-        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+        grid-template-columns: 1fr; 
     }
 
     .price-inputs {
@@ -405,6 +403,6 @@ body {
     }
 
     .product-card-image-container {
-        height: 180px; /* Ajuste a altura da imagem para telas muito pequenas */
+        height: 180px; 
     }
 }

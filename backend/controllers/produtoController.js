@@ -103,10 +103,25 @@ const deleteProduto = async (req, res) => {
   }
 };
 
+// @desc    Buscar produtos em destaque
+// @route   GET /api/produtos/destaque
+// @access  Public
+const getProdutosEmDestaque = async (req, res) => {
+  try {
+    // Encontra produtos onde 'emDestaque' é true
+    const produtos = await Produto.find({ emDestaque: true });
+    res.json(produtos);
+  } catch (error) {
+    console.error('Erro ao buscar produtos em destaque:', error);
+    res.status(500).json({ message: 'Erro ao buscar produtos em destaque.' });
+  }
+};
+
 module.exports = {
   getProdutos,
   getProdutoById,
   createProduto,
   updateProduto,
-  deleteProduto
+  deleteProduto,
+  getProdutosEmDestaque
 };

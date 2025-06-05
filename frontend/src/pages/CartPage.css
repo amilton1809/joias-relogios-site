@@ -1,4 +1,4 @@
-/* Variáveis de cores - Manter aqui se for o único arquivo CSS, caso contrário, mover para um global.css */
+
 :root {
   --primary-color: #8a2be2;
   --secondary-color: #4b0082;
@@ -18,7 +18,6 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    /* Adiciona box-sizing globalmente para evitar problemas de layout */
     box-sizing: border-box; 
     background-color: var(--light-bg);
     color: var(--text-color);
@@ -34,12 +33,12 @@ h1, h2, h3 {
     color: var(--secondary-color);
 }
 
-/* Base dos botões (Manter aqui se não houver um global.css, ou mover para um global.css e remover daqui) */
+
 .btn {
-    display: inline-flex; /* Usar flexbox para alinhar ícone e texto */
+    display: inline-flex; 
     align-items: center;
-    justify-content: center; /* Centraliza o conteúdo do botão */
-    gap: 8px; /* Espaçamento entre ícone e texto */
+    justify-content: center; 
+    gap: 8px; 
     padding: 10px 25px;
     border-radius: 25px;
     text-decoration: none;
@@ -87,9 +86,8 @@ h1, h2, h3 {
 
 .btn-block {
     width: 100%;
-    /* Display já é flex por padrão do .btn */
-    margin-bottom: 10px; /* Espaçamento entre botões bloco */
-    box-sizing: border-box; /* Essencial para que width:100% + padding não cortem */
+    margin-bottom: 10px; 
+    box-sizing: border-box; 
 }
 
 
@@ -146,7 +144,7 @@ h1, h2, h3 {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow-x: auto; /* Permite rolagem horizontal em tabelas pequenas */
+    overflow-x: auto;
 }
 
 .cart-table {
@@ -178,19 +176,19 @@ h1, h2, h3 {
 /* ----- CORREÇÕES AQUI ----- */
 .product-info {
     display: flex;
-    flex-direction: column; /* FORÇA IMAGEM E NOME A FICAREM EM COLUNA */
-    align-items: flex-start; /* Alinha imagem e texto à esquerda */
-    gap: 10px; /* Espaçamento entre a imagem e o nome do produto */
-    min-width: 180px; /* Reduzi o min-width para dar mais espaço à tabela geral */
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 10px; 
+    min-width: 180px; 
 }
 
 .product-info img {
-    width: 80px; /* Tamanho fixo para imagens de produtos no carrinho */
+    width: 80px; 
     height: 80px;
-    object-fit: contain; /* Redimensiona para caber sem cortar */
+    object-fit: contain; 
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    flex-shrink: 0; /* Impede que a imagem encolha */
+    flex-shrink: 0; 
 }
 
 .product-info a {
@@ -198,12 +196,11 @@ h1, h2, h3 {
     color: var(--text-color);
     font-weight: bold;
     transition: color 0.3s ease;
-    /* Permite que o texto quebre a linha se for muito longo */
     word-wrap: break-word; 
     overflow-wrap: break-word;
-    white-space: normal; /* Garante que o texto quebre a linha */
-    max-width: 100%; /* Garante que o link não ultrapasse o td */
-    box-sizing: border-box; /* Importante para o link dentro do product-info */
+    white-space: normal; 
+    max-width: 100%; 
+    box-sizing: border-box; 
 }
 
 .product-info a:hover {

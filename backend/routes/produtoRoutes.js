@@ -5,12 +5,14 @@ const {
   getProdutoById, 
   createProduto, 
   updateProduto, 
-  deleteProduto 
+  deleteProduto,
+  getProdutosEmDestaque
 } = require('../controllers/produtoController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 // Rotas públicas
 router.get('/', getProdutos);
+router.get('/destaque', getProdutosEmDestaque);
 router.get('/:id', getProdutoById);
 
 // Rotas protegidas para administradores

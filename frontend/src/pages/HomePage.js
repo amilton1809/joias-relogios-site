@@ -3,65 +3,35 @@ import ProductCard from '../components/ProductCard';
 import { FaSearch } from 'react-icons/fa';
 import './HomePage.css'
 
-const HomePage = () => {
+const HomePage = () => { // <--- A função HomePage COMEÇA AQUI!
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Adicione um estado para erros
 
-  // Produtos de exemplo para demonstração
   useEffect(() => {
-    // Aqui seria feita a chamada à API para buscar produtos em destaque
-    const demoProducts = [
-      {
-        _id: '1',
-        nome: 'Relógio Elegance Gold',
-        descricao: 'Relógio de luxo com acabamento em ouro',
-        categoria: 'relogios',
-        preco: 1299.99,
-        estoque: 10,
-        imagens: ['https://lojavivara.vtexassets.com/arquivos/ids/908225-1600-1600/Relogio-Vivara-Biomas-Tapete-Verde-Masculino-Aco-65461_1_set.jpg?v=638724870842030000'],
-        marca: 'Elegance',
-        emDestaque: true
-      },
-      {
-        _id: '2',
-        nome: 'Colar de Diamantes',
-        descricao: 'Colar com diamantes autênticos',
-        categoria: 'joias',
-        preco: 2499.99,
-        estoque: 5,
-        imagens: ['https://lojavivara.vtexassets.com/arquivos/ids/908225-1600-1600/Relogio-Vivara-Biomas-Tapete-Verde-Masculino-Aco-65461_1_set.jpg?v=638724870842030000'],
-        marca: 'Diamond Collection',
-        emDestaque: true
-      },
-      {
-        _id: '3',
-        nome: 'Pulseira de Prata',
-        descricao: 'Pulseira de prata 925',
-        categoria: 'joias',
-        preco: 399.99,
-        estoque: 15,
-        imagens: ['https://lojavivara.vtexassets.com/arquivos/ids/908225-1600-1600/Relogio-Vivara-Biomas-Tapete-Verde-Masculino-Aco-65461_1_set.jpg?v=638724870842030000'],
-        marca: 'Silver Dreams',
-        emDestaque: true
-      },
-      {
-        _id: '4',
-        nome: 'Relógio Esportivo',
-        descricao: 'Relógio resistente à água para esportes',
-        categoria: 'relogios',
-        preco: 899.99,
-        estoque: 8,
-        imagens: ['https://lojavivara.vtexassets.com/arquivos/ids/908225-1600-1600/Relogio-Vivara-Biomas-Tapete-Verde-Masculino-Aco-65461_1_set.jpg?v=638724870842030000'],
-        marca: 'SportTime',
-        emDestaque: true
-      }
-    ];
-    
-    setFeaturedProducts(demoProducts);
-    setLoading(false);
-  }, []);
+    const fetchFeaturedProducts = async () => {
+      try {
+        // IMPORTANTE: Substitua 'http://localhost:5000' pela URL base do SEU backend
+        // A rota é '/api/produtos/destaque' porque você prefixou com '/api' no seu server.js
+        const response = await fetch('http://localhost:5000/api/produtos/destaque');
 
-  return (
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setFeaturedProducts(data);
+      } catch (err) {
+        console.error("Erro ao buscar produtos em destaque:", err);
+        setError("Não foi possível carregar os produtos em destaque. Tente novamente mais tarde.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedProducts();
+  }, []); // O array vazio assegura que o efeito roda apenas uma vez após a montagem
+
+  return ( // <--- O return do COMPONENTE está DENTRO da função HomePage
     <div className="home-page">
       <section className="hero">
         <div className="container">
@@ -85,6 +55,10 @@ const HomePage = () => {
           <h2>Produtos em Destaque</h2>
           {loading ? (
             <p>Carregando produtos...</p>
+          ) : error ? (
+            <p className="error-message">{error}</p>
+          ) : featuredProducts.length === 0 ? (
+            <p>Nenhum produto em destaque encontrado.</p>
           ) : (
             <div className="products-grid">
               {featuredProducts.map(product => (
@@ -100,12 +74,12 @@ const HomePage = () => {
           <h2>Categorias</h2>
           <div className="categories-grid">
             <div className="category-card">
-              <img src="../img/pulseira1.webp" alt="Joias" />
+              <img src="../img/pulseira12.webp" alt="Joias" />
               <h3>Joias</h3>
               <a href="/produtos/joias" className="btn btn-outline">Ver Coleção</a>
             </div>
             <div className="category-card">
-              <img src="../img/pulseira1.webp" alt="Relógios" />
+              <img src="../img/relogio.webp" alt="Relógios" />
               <h3>Relógios</h3>
               <a href="/produtos/relogios" className="btn btn-outline">Ver Coleção</a>
             </div>
@@ -118,8 +92,8 @@ const HomePage = () => {
           <div className="about-content">
             <h2>Sobre Nós</h2>
             <p>
-              Somos uma loja especializada em joias e relógios de luxo, oferecendo produtos de alta qualidade 
-              e design exclusivo. Nossa missão é proporcionar elegância e sofisticação para nossos clientes, 
+              Somos uma loja especializada em joias e relógios de luxo, oferecendo produtos de alta qualidade
+              e design exclusivo. Nossa missão é proporcionar elegância e sofisticação para nossos clientes,
               com peças que combinam tradição e modernidade.
             </p>
             <a href="/sobre" className="btn btn-secondary">Saiba Mais</a>
@@ -128,6 +102,6 @@ const HomePage = () => {
       </section>
     </div>
   );
-};
+}; // <--- A função HomePage TERMINA AQUI!
 
 export default HomePage;

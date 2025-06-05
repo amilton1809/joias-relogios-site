@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaEye, FaCheck, FaTruck } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
+import './Orders.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
@@ -39,7 +40,7 @@ const Orders = () => {
     };
 
     fetchOrders(); // Chama a função ao montar o componente
-  }, [currentUser]); // Adiciona currentUser como dependência para re-executar se o usuário mudar
+  }, [currentUser]);
 
   const updateOrderStatus = async (id, status) => {
     // Verifique se o usuário está logado e tem um token antes de fazer a requisição
@@ -56,7 +57,7 @@ const Orders = () => {
         },
       };
 
-      // Mude aqui: use API_BASE_URL
+
       await axios.put(`${API_BASE_URL}/pedidos/${id}/${status}`, {}, config); // O segundo parâmetro {} é o body, mesmo que vazio
 
       // Atualizar a lista de pedidos após a mudança de status
@@ -73,9 +74,9 @@ const Orders = () => {
   return (
     <div className="admin-orders">
       <h1>Gerenciamento de Pedidos</h1>
-      
+
       {error && <div className="alert alert-danger">{error}</div>}
-      
+
       {loading ? (
         <p>Carregando pedidos...</p>
       ) : (
@@ -100,27 +101,26 @@ const Orders = () => {
               ) : (
                 orders.map(order => (
                   <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                    <td>{order.usuario?.nome || 'Usuário'}</td>
-                    <td>R$ {order.valorTotal.toFixed(2)}</td>
-                    <td>
+                    <td data-label="ID">{order._id}</td> {/* Adicione data-label */}
+                    <td data-label="Data">{new Date(order.createdAt).toLocaleDateString()}</td> {/* Adicione data-label */}
+                    <td data-label="Cliente">{order.usuario?.nome || 'Usuário'}</td> {/* Adicione data-label */}
+                    <td data-label="Total">R$ {order.valorTotal.toFixed(2)}</td> {/* Adicione data-label */}
+                    <td data-label="Pago"> {/* Adicione data-label */}
                       {order.isPago ? (
                         <span className="badge bg-success">Sim</span>
                       ) : (
                         <span className="badge bg-danger">Não</span>
                       )}
                     </td>
-                    <td>
+                    <td data-label="Entregue"> {/* Adicione data-label */}
                       {order.isEntregue ? (
                         <span className="badge bg-success">Sim</span>
                       ) : (
                         <span className="badge bg-danger">Não</span>
                       )}
                     </td>
-                    <td>
+                    <td data-label="Ações"> {/* Adicione data-label */}
                       <div className="action-buttons">
-                        {/* A rota de visualização provavelmente precisaria de proteção */}
                         <Link to={`/admin/orders/${order._id}`} className="btn btn-sm btn-info">
                           <FaEye />
                         </Link>
