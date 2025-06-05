@@ -34,17 +34,18 @@ const getProdutoById = async (req, res) => {
 // @access  Private/Admin
 const createProduto = async (req, res) => {
   try {
-    const { nome, preco, descricao, imagens, marca, categoria, estoque } = req.body;
+    const { nome, preco, descricao, imagens, marca, categoria, estoque, emDestaque } = req.body; // <-- Adicionado emDestaque
 
     const produto = await Produto.create({
       nome,
       preco,
-      usuario: req.user._id,
+      usuario: req.user._id, // Assumindo que você quer vincular o produto a um usuário admin
       imagens,
       marca,
       categoria,
       estoque,
-      descricao
+      descricao,
+      emDestaque // <-- Adicionado emDestaque
     });
 
     if (produto) {
@@ -61,19 +62,30 @@ const createProduto = async (req, res) => {
 // @route   PUT /api/produtos/:id
 // @access  Private/Admin
 const updateProduto = async (req, res) => {
-  try {
-    const { nome, preco, descricao, imagens, marca, categoria, estoque } = req.body;
+  const { 
+    nome, 
+    preco, 
+    descricao, 
+    imagens, 
+    marca, 
+    categoria, 
+    estoque, 
+    emDestaque // <--- ESTE É O CAMPO CRÍTICO QUE FOI ADICIONADO AQUI
+  } = req.body;
 
+  try {
     const produto = await Produto.findById(req.params.id);
 
     if (produto) {
-      produto.nome = nome || produto.nome;
-      produto.preco = preco || produto.preco;
-      produto.descricao = descricao || produto.descricao;
-      produto.imagens = imagens || produto.imagens;
-      produto.marca = marca || produto.marca;
-      produto.categoria = categoria || produto.categoria;
-      produto.estoque = estoque || produto.estoque;
+      produto.nome = nome !== undefined ? nome : produto.nome;
+      produto.preco = preco !== undefined ? preco : produto.preco;
+      produto.descricao = descricao !== undefined ? descricao : produto.descricao;
+      produto.imagens = imagens !== undefined ? imagens : produto.imagens; // Pode ser um array vazio []
+      produto.marca = marca !== undefined ? marca : produto.marca;
+      produto.categoria = categoria !== undefined ? categoria : produto.categoria;
+      produto.estoque = estoque !== undefined ? estoque : produto.estoque;
+      // ATUALIZAÇÃO DO CAMPO emDestaque:
+      produto.emDestaque = emDestaque !== undefined ? emDestaque : produto.emDestaque; // <--- CORREÇÃO AQUI
 
       const updatedProduto = await produto.save();
       res.json(updatedProduto);
@@ -81,6 +93,7 @@ const updateProduto = async (req, res) => {
       res.status(404).json({ message: 'Produto não encontrado' });
     }
   } catch (error) {
+    console.error('Erro ao atualizar produto:', error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -121,7 +134,7 @@ module.exports = {
   getProdutos,
   getProdutoById,
   createProduto,
-  updateProduto,
+  updateProduto, // Exporta a função atualizada
   deleteProduto,
   getProdutosEmDestaque
 };
