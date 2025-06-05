@@ -3,35 +3,40 @@ import ProductCard from '../components/ProductCard';
 import { FaSearch } from 'react-icons/fa';
 import './HomePage.css'
 
-const HomePage = () => { // <--- A função HomePage COMEÇA AQUI!
+// Adicione esta linha para importar o axios, caso ainda não esteja fazendo em alguma parte do código
+// import axios from 'axios'; 
+
+// Defina a API_BASE_URL usando process.env, assim como nos seus outros arquivos
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
+const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Adicione um estado para erros
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        // IMPORTANTE: Substitua 'http://localhost:5000' pela URL base do SEU backend
-        // A rota é '/api/produtos/destaque' porque você prefixou com '/api' no seu server.js
-        const response = await fetch('http://localhost:5000/api/produtos/destaque');
+        // CORREÇÃO AQUI: Use API_BASE_URL para a requisição
+        const response = await fetch(`${API_BASE_URL}/produtos/destaque`); //
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`); //
         }
-        const data = await response.json();
-        setFeaturedProducts(data);
+        const data = await response.json(); //
+        setFeaturedProducts(data); //
       } catch (err) {
-        console.error("Erro ao buscar produtos em destaque:", err);
-        setError("Não foi possível carregar os produtos em destaque. Tente novamente mais tarde.");
+        console.error("Erro ao buscar produtos em destaque:", err); //
+        setError("Não foi possível carregar os produtos em destaque. Tente novamente mais tarde."); //
       } finally {
-        setLoading(false);
+        setLoading(false); //
       }
     };
 
     fetchFeaturedProducts();
-  }, []); // O array vazio assegura que o efeito roda apenas uma vez após a montagem
+  }, []);
 
-  return ( // <--- O return do COMPONENTE está DENTRO da função HomePage
+  return (
     <div className="home-page">
       <section className="hero">
         <div className="container">
@@ -102,6 +107,6 @@ const HomePage = () => { // <--- A função HomePage COMEÇA AQUI!
       </section>
     </div>
   );
-}; // <--- A função HomePage TERMINA AQUI!
+};
 
 export default HomePage;

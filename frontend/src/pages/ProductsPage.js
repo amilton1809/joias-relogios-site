@@ -35,14 +35,14 @@ const ProductsPage = () => {
         <div className="category-navigation">
           <Link to="/produtos/joias" className="category-link">
             <div className="category-card">
-              <img src="https://via.placeholder.com/300" alt="Joias" />
-              <h3>Joias</h3>
+              {/* <img src="https://via.placeholder.com/300" alt="Joias" />
+              <h3>Joias</h3> */}
             </div>
           </Link>
           <Link to="/produtos/relogios" className="category-link">
             <div className="category-card">
-              <img src="https://via.placeholder.com/300" alt="Relógios" />
-              <h3>Relógios</h3>
+              {/* <img src="https://via.placeholder.com/300" alt="Relógios" />
+              <h3>Relógios</h3> */}
             </div>
           </Link>
         </div>
