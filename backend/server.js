@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 const produtoRoutes = require('./routes/produtoRoutes');
 const pedidoRoutes = require('./routes/pedidoRoutes');
+const path = require('path'); // Adicionar para lidar com caminhos de arquivo
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -19,6 +20,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// Middleware para servir arquivos estáticos (imagens carregadas)
+// Isso tornará as imagens salvas em 'uploads' acessíveis via URL
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rotas
 app.use('/api/users', userRoutes);

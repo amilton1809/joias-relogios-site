@@ -1,5 +1,3 @@
-// frontend/src/App.js (Versão CORRIGIDA)
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -15,13 +13,14 @@ import CategoryPage from './pages/CategoryPage';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/Products';
 import AdminOrders from './pages/admin/Orders';
-import ProductEdit from './pages/admin/ProductEdit';
+
+
+import ProductForm from './pages/admin/ProductForm'; 
+
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
-// import { Link } from 'react-router-dom'; // Remova esta linha se não a usar em App.js
-import ProductNewPage from './pages/admin/ProductNewPage'; // Manter esta importação
 
 function App() {
   return (
@@ -47,9 +46,10 @@ function App() {
               <Route element={<AdminRoute />}>
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/products" element={<AdminProducts />} />
-                {/* ADICIONE ESTA LINHA: */}
-                <Route path="/admin/products/new" element={<ProductNewPage />} /> 
-                <Route path="/admin/products/edit/:id" element={<ProductEdit />} />
+                {/* Use ProductForm para criação de novo produto */}
+                <Route path="/admin/products/new" element={<ProductForm isEditMode={false} />} />
+                {/* Use ProductForm para edição de produto existente */}
+                <Route path="/admin/products/edit/:id" element={<ProductForm isEditMode={true} />} />
                 <Route path="/admin/orders" element={<AdminOrders />} />
               </Route>
             </Routes>

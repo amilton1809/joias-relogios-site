@@ -1,157 +1,213 @@
-// frontend/src/pages/admin/ProductNewPage.js
-import React, { useState } from 'react';
+// ProductNewPage.js (aplicar similarmente em ProductEdit.js)
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Ajuste o caminho se necessário
-import './ProductNewPage.css'; // <--- IMPORTE O CSS AQUI
+import { useAuth } from '../../context/AuthContext';
+import { FaSave, FaArrowLeft } from 'react-icons/fa'; // Para ProductEdit.js
+import './ProductNewPage.css'; // ou ProductEdit.css
 
-const ProductNewPage = () => {
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+
+const ProductPage = ({ isEditMode }) => { // Pode ser um componente reutilizável ou separado
+  const { id } = useParams(); // Apenas para ProductEdit
   const navigate = useNavigate();
-  const { currentUser } = useAuth(); // Descomentando para uso do token
-
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+  const { currentUser } = useAuth();
 
   const [formData, setFormData] = useState({
     nome: '',
     descricao: '',
-    categoria: 'joias', // ou 'relogios'
-    preco: '',
-    estoque: '',
+    categoria: 'joias',
+    preco: 0,
+    estoque: 0,
     marca: '',
-    imagens: [''], // Array para múltiplas imagens
     emDestaque: false
   });
+  const [currentImageUrls, setCurrentImageUrls] = useState([]); // Para imagens existentes (apenas em edição)
+  const [selectedFiles, setSelectedFiles] = useState([]); // Para os novos arquivos a serem uploaded
+  const [loading, setLoading] = useState(isEditMode);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  // Lógica para carregar o produto em modo de edição
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!currentUser || !currentUser.token) {
+        setError('Você não está autorizado. Faça login como administrador.');
+        setLoading(false);
+        return;
+      }
+      try {
+        const config = { headers: { Authorization: `Bearer ${currentUser.token}` } };
+        const response = await axios.get(`<span class="math-inline">\{API\_BASE\_URL\}/produtos/</span>{id}`, config);
+        setFormData({
+          nome: response.data.nome,
+          descricao: response.data.descricao,
+          categoria: response.data.categoria,
+          preco: response.data.preco,
+          estoque: response.data.estoque,
+          marca: response.data.marca,
+          emDestaque: response.data.emDestaque
+        });
+        setCurrentImageUrls(response.data.imagens || []); // Guarda as URLs existentes
+        setLoading(false);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Erro ao carregar produto');
+        setLoading(false);
+      }
+    };
+    if (isEditMode) {
+      fetchProduct();
+    } else {
+      setLoading(false);
+    }
+  }, [id, isEditMode, currentUser]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+    setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
   };
 
-  const handleImageChange = (index, value) => {
-    const newImages = [...formData.imagens];
-    newImages[index] = value;
-    setFormData({ ...formData, imagens: newImages });
+  const handleFileChange = (e) => {
+    setSelectedFiles(Array.from(e.target.files)); // Converte FileList para Array
   };
 
-  const addImageField = () => {
-    setFormData({ ...formData, imagens: [...formData.imagens, ''] });
+  const handleRemoveExistingImage = (urlToRemove) => {
+    setCurrentImageUrls(currentImageUrls.filter(url => url !== urlToRemove));
   };
-
-  // Função para remover um campo de imagem
-  const removeImageField = (index) => {
-    const newImages = formData.imagens.filter((_, i) => i !== index);
-    setFormData({ ...formData, imagens: newImages });
-  };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Adicionar verificação de token antes de submeter
+    setError('');
+    setSubmitting(true);
+
     if (!currentUser || !currentUser.token) {
-        alert('Você precisa estar logado como administrador para criar produtos.');
-        return;
+      setError('Você não está autorizado a salvar produtos. Faça login como administrador.');
+      setSubmitting(false);
+      return;
     }
 
     try {
-      // Remover campos de imagem vazios antes de enviar
-      const dataToSend = {
-        ...formData,
-        imagens: formData.imagens.filter(img => img.trim() !== '')
-      };
-      
+      if (!formData.nome || !formData.descricao || !formData.marca || formData.preco <= 0) {
+        setError('Preencha todos os campos obrigatórios');
+        setSubmitting(false);
+        return;
+      }
+
+      const dataToSend = new FormData();
+      dataToSend.append('nome', formData.nome);
+      dataToSend.append('descricao', formData.descricao);
+      dataToSend.append('categoria', formData.categoria);
+      dataToSend.append('preco', formData.preco);
+      dataToSend.append('estoque', formData.estoque);
+      dataToSend.append('marca', formData.marca);
+      dataToSend.append('emDestaque', formData.emDestaque);
+
+      // Anexar os novos arquivos de imagem
+      selectedFiles.forEach(file => {
+        dataToSend.append('imagens', file); // 'imagens' é o nome do campo esperado pelo Multer no backend
+      });
+
+      // Se estiver editando, você pode enviar as URLs das imagens existentes que não foram removidas
+      // Isso requer uma lógica mais sofisticada no backend para não sobrescrever TUDO.
+      // Por simplicidade, o backend atual assume que todas as imagens vêm do upload ou que são substituídas.
+      // Se você quer manter imagens existentes E adicionar novas, o backend precisará ser ajustado para isso.
+      // Uma abordagem seria enviar as URLs existentes como um campo de texto separado e o backend as mesclaria.
+      currentImageUrls.forEach(url => {
+         dataToSend.append('existingImages', url); // Exemplo de como enviar urls existentes
+      });
+
+
       const config = {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${currentUser.token}`, // <--- USE O TOKEN AQUI
+          Authorization: `Bearer ${currentUser.token}`,
+          // 'Content-Type': 'multipart/form-data' é automaticamente definido pelo Axios quando você envia FormData
         },
       };
 
-      // Mude aqui: use API_BASE_URL
-      const response = await axios.post(`${API_BASE_URL}/produtos`, dataToSend, config);
-      alert('Produto criado com sucesso!');
-      navigate(`/admin/products`); // Redireciona para a lista de produtos admin
-    } catch (error) {
-      console.error('Erro ao criar produto:', error.response ? error.response.data.message : error.message);
-      alert('Erro ao criar produto: ' + (error.response ? error.response.data.message : error.message));
+      if (isEditMode) {
+        await axios.put(`<span class="math-inline">\{API\_BASE\_URL\}/produtos/</span>{id}`, dataToSend, config);
+      } else {
+        await axios.post(`${API_BASE_URL}/produtos`, dataToSend, config);
+      }
+
+      navigate('/admin/products');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Erro ao salvar produto');
+      setSubmitting(false);
     }
   };
 
+  if (loading) {
+    return <p>Carregando produto...</p>;
+  }
+
   return (
-    <div className="product-new-container"> {/* <--- CLASSE PRINCIPAL */}
-      <h1>Adicionar Novo Produto</h1>
-      <form onSubmit={handleSubmit} className="product-new-form"> {/* <--- CLASSE DO FORMULÁRIO */}
+    <div className="product-edit">
+      <div className="admin-header">
+        <h1>{isEditMode ? 'Editar Produto' : 'Novo Produto'}</h1>
+        <button
+          onClick={() => navigate('/admin/products')}
+          className="btn btn-secondary"
+        >
+          <FaArrowLeft /> Voltar
+        </button>
+      </div>
+
+      {error && <div className="alert alert-danger">{error}</div>}
+
+      <form onSubmit={handleSubmit} className="product-form">
+        {/* Outros campos do formulário (nome, descricao, etc.) aqui */}
+        {/* ... (manter os campos existentes do seu ProductEdit.js/ProductNewPage.js) */}
+
         <div className="form-group">
-          <label htmlFor="nome">Nome:</label>
-          <input type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label htmlFor="descricao">Descrição:</label>
-          <textarea id="descricao" name="descricao" value={formData.descricao} onChange={handleChange} required></textarea>
-        </div>
-        <div className="form-group">
-          <label htmlFor="preco">Preço:</label>
-          <input type="number" id="preco" name="preco" value={formData.preco} onChange={handleChange} required step="0.01" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="estoque">Estoque:</label>
-          <input type="number" id="estoque" name="estoque" value={formData.estoque} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label htmlFor="marca">Marca:</label>
-          <input type="text" id="marca" name="marca" value={formData.marca} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label htmlFor="categoria">Categoria:</label>
-          <select id="categoria" name="categoria" value={formData.categoria} onChange={handleChange} required>
-            <option value="joias">Joias</option>
-            <option value="relogios">Relógios</option>
-          </select>
-        </div>
-        
-        <div className="form-group">
-          <label>Imagens (URLs):</label>
-          {formData.imagens.map((img, index) => (
-            <div key={index} className="image-input-row"> {/* <--- CLASSE PARA ALINHAR IMAGENS */}
-              <input 
-                type="text" 
-                value={img} 
-                onChange={(e) => handleImageChange(index, e.target.value)} 
-                placeholder={`URL da Imagem ${index + 1}`} 
-              />
-              {/* Botão de remover imagem, só aparece se tiver mais de uma */}
-              {formData.imagens.length > 1 && (
-                <button 
-                  type="button" 
-                  onClick={() => removeImageField(index)}
-                  className="btn btn-danger"
+          <label>Imagens do Produto (URLs existentes)</label>
+          <div className="existing-images-preview">
+            {currentImageUrls.map((imgUrl, index) => (
+              <div key={index} className="image-preview-item">
+                <img src={imgUrl} alt={`Imagem ${index}`} className="product-thumbnail" />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveExistingImage(imgUrl)}
+                  className="btn btn-danger btn-sm"
                 >
                   Remover
                 </button>
-              )}
-            </div>
-          ))}
-          <button type="button" onClick={addImageField} className="btn">Adicionar outra imagem</button>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="form-group checkbox-group"> {/* <--- CLASSE PARA CHECKBOX */}
-          <label>
-            <input 
-              type="checkbox" 
-              name="emDestaque" 
-              checked={formData.emDestaque} 
-              onChange={handleChange} 
-            />
-            Produto em Destaque
-          </label>
+        <div className="form-group">
+          <label>Upload de Novas Imagens</label>
+          <input
+            type="file"
+            multiple // Permite selecionar múltiplos arquivos
+            onChange={handleFileChange}
+            accept="image/*" // Sugere que apenas arquivos de imagem sejam selecionados
+          />
+          <div className="new-images-preview">
+            {selectedFiles.map((file, index) => (
+              <img key={index} src={URL.createObjectURL(file)} alt={`Nova Imagem ${index}`} className="product-thumbnail" />
+            ))}
+          </div>
         </div>
 
-        <button type="submit" className="btn btn-primary">Criar Produto</button>
+        {/* Checkbox emDestaque e Botões de Ação */}
+        {/* ... (manter os campos restantes do seu ProductEdit.js/ProductNewPage.js) */}
+
+        <div className="form-actions">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={submitting}
+          >
+            <FaSave /> {submitting ? 'Salvando...' : 'Salvar Produto'}
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default ProductNewPage;
+// Exportar como ProductEdit ou ProductNewPage, dependendo do uso
+export default ProductPage;
