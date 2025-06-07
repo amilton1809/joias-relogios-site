@@ -102,9 +102,6 @@ O projeto está dividido em duas partes principais:
 - Processo de checkout
 - Simulação de pagamento
 
-## Credenciais de Acesso
-
-
 ## Instruções para Windows
 
 Se você estiver usando Windows, execute os comandos separadamente:
@@ -159,3 +156,4 @@ Se você estiver usando Windows, execute os comandos separadamente:
 - Sistema de avaliações de produtos
 - Integração com serviços de email para notificações
 - Painel de usuário mais completo
+- Novas.
